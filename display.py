@@ -42,7 +42,6 @@ class Display():
 
     def run(self):
         # Main loop
-        global button_current_color
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -51,9 +50,9 @@ class Display():
                 elif event.type == pygame.MOUSEMOTION:
                     # Change button color when the mouse hovers over it
                     if self.is_inside_button(event.pos):
-                        button_current_color = button_hover_color
+                        self.button_current_color = button_hover_color
                     else:
-                        button_current_color = button_color
+                        self.button_current_color = button_color
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # Check if the button is clicked
                     if self.is_inside_button(event.pos):
@@ -63,7 +62,7 @@ class Display():
             self.screen.fill((0, 0, 0))  # Black
 
             # Draw the button
-            pygame.draw.rect(self.screen, button_current_color, (self.button_x, self.button_y, button_width, button_height))
+            pygame.draw.rect(self.screen, self.button_current_color, (self.button_x, self.button_y, button_width, button_height))
 
             # Render the button text
             button_text = self.font.render("Click Me!", True, self.text_color)
