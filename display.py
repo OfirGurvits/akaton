@@ -59,7 +59,7 @@ class Display():
                         print("Button Clicked!")
 
             # Clear the screen
-            self.screen.fill((0, 0, 0))  # Black
+            self.screen.fill((255, 255, 255))  # Black
 
             # Draw the button
             pygame.draw.rect(self.screen, self.button_current_color, (self.button_x, self.button_y, button_width, button_height))
