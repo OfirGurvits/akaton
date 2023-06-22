@@ -6,7 +6,6 @@ button_width = 200
 button_color = (255, 0, 0)  # Red
 button_hover_color = (0, 255, 0)  # Green
 
-
 def on_click_yes():
     print('click click click yes')
 
@@ -67,6 +66,8 @@ class Display:
             self.buttons.extend(button_line)
 
     def run(self):
+        start_time = -4000
+        last_choice = ''
         # Main loop
         while True:
             for event in pygame.event.get():
@@ -80,16 +81,25 @@ class Display:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for button in self.buttons:
                         if button.is_inside(event.pos):
-                            button.execute()
+                            start_time = pygame.time.get_ticks()
+                            last_choice = button.execute()
                     # Check if the button is clicked
 
             # Clear the screen
             self.screen.fill((255, 255, 255))  # white
+            elapsed_time = pygame.time.get_ticks() - start_time
+            if elapsed_time <= 2000:
+                text_surface = self.font.render(last_choice, True, (0,0,0))
+                text_rect = text_surface.get_rect(center=(400, 100))
 
+                # Draw the text onto the screen
+                self.screen.blit(text_surface, text_rect)
             # Draw the button
             for button in self.buttons:
                 button.draw()
             # self.button.draw()
+
+
 
             # Update the display
             pygame.display.flip()

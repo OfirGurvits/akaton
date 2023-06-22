@@ -45,3 +45,4 @@ class Button:
 
     def execute(self):
         self.func()
+        return self.text
