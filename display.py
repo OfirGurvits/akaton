@@ -6,6 +6,7 @@ button_width = 200
 button_color = (255, 0, 0)  # Red
 button_hover_color = (0, 255, 0)  # Green
 
+
 def on_click_yes():
     print('click click click yes')
 
@@ -48,6 +49,10 @@ class Display:
 
         rows = 2
         colums = 2
+        flag = 1
+        flag2 = 1
+        dis = 50
+        dis2 = 40
 
         button_x = (screen_width - button_width) // (rows + 1)
         button_y = (screen_height - button_height) // (colums + 1)
@@ -60,11 +65,13 @@ class Display:
             for j in range(rows + 1):
                 if j % 2 != 0:
                     continue
-                button_line.append(Button((1 + j) * button_y, (1 + i) * button_x, self.screen, button_color,
+                button_line.append(Button((1 + j) * button_y + dis * flag, (1 + i) * button_x + dis2*flag2,
+                                          self.screen, button_color,
                                           button_hover_color, self.font, text=strings[counter], func=funcs[counter]))
                 counter += 1
+                flag *= -1
             self.buttons.extend(button_line)
-
+            flag2 *= -1
     def run(self):
         start_time = -4000
         last_choice = ''
@@ -89,7 +96,7 @@ class Display:
             self.screen.fill((255, 255, 255))  # white
             elapsed_time = pygame.time.get_ticks() - start_time
             if elapsed_time <= 2000:
-                text_surface = self.font.render(last_choice, True, (0,0,0))
+                text_surface = self.font.render(last_choice, True, (0, 0, 0))
                 text_rect = text_surface.get_rect(center=(400, 100))
 
                 # Draw the text onto the screen
@@ -98,8 +105,6 @@ class Display:
             for button in self.buttons:
                 button.draw()
             # self.button.draw()
-
-
 
             # Update the display
             pygame.display.flip()
