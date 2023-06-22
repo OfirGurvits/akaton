@@ -56,7 +56,9 @@ class Display:
 
         button_x = (screen_width - button_width) // (rows + 1)
         button_y = (screen_height - button_height) // (colums + 1)
-        strings = ['Yes', 'No', 'Maybe', 'don\'t know']
+        # strings = ['Yes', 'No', 'Maybe', 'don\'t know']
+        strings = ['AC', 'Light', 'Radio', 'remote']
+        images = ['./AC.jpeg', './light.jpeg', './radio.jpeg', './remote.jpg']
         funcs = [on_click_yes, on_click_no, on_click_maybe, on_click_dont_know]
         counter = 0
         self.buttons = []
@@ -65,13 +67,15 @@ class Display:
             for j in range(rows + 1):
                 if j % 2 != 0:
                     continue
-                button_line.append(Button((1 + j) * button_y + dis * flag, (1 + i) * button_x + dis2*flag2,
+                button_line.append(Button((1 + j) * button_y + dis * flag, (1 + i) * button_x + dis2 * flag2,
                                           self.screen, button_color,
-                                          button_hover_color, self.font, text=strings[counter], func=funcs[counter]))
+                                          button_hover_color, self.font, text=strings[counter], func=funcs[counter],
+                                          image=images[counter]))
                 counter += 1
                 flag *= -1
             self.buttons.extend(button_line)
             flag2 *= -1
+
     def run(self):
         start_time = -4000
         last_choice = ''
