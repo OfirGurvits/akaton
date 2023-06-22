@@ -1,12 +1,16 @@
 import pygame
 
 
+def default_func():
+    print('click click click')
+
+
 class Button:
     button_height = 100
     button_width = 200
 
     def __init__(self, x, y, screen, button_color, button_hover_color, font, text_color=(255, 255, 255),
-                 text="Click Me!"):
+                 text="Click Me!", func=default_func):
         self.font = font
         self.text_color = text_color
         self.button_x = x
@@ -16,6 +20,7 @@ class Button:
         self.screen = screen
         self.button_hover_color = button_hover_color
         self.text = text
+        self.func = func
 
     def is_inside(self, pos):
         return self.button_x <= pos[0] <= self.button_x + self.button_width and self.button_y <= pos[1] \
@@ -37,3 +42,6 @@ class Button:
 
         # Draw the button text onto the screen
         self.screen.blit(button_text, button_text_rect)
+
+    def execute(self):
+        self.func()

@@ -7,6 +7,22 @@ button_color = (255, 0, 0)  # Red
 button_hover_color = (0, 255, 0)  # Green
 
 
+def on_click_yes():
+    print('click click click yes')
+
+
+def on_click_no():
+    print('click click click no')
+
+
+def on_click_maybe():
+    print('click click click maybe')
+
+
+def on_click_dont_know():
+    print('click click click don\'t know')
+
+
 class Display:
 
     # Initialize Pygame
@@ -37,16 +53,17 @@ class Display:
         button_x = (screen_width - button_width) // (rows + 1)
         button_y = (screen_height - button_height) // (colums + 1)
         strings = ['Yes', 'No', 'Maybe', 'don\'t know']
-        string_counter = 0
+        funcs = [on_click_yes, on_click_no, on_click_maybe, on_click_dont_know]
+        counter = 0
         self.buttons = []
         for i in range(colums):
             button_line = []
             for j in range(rows + 1):
                 if j % 2 != 0:
                     continue
-                button_line.append(Button((1 + j) * button_y, (1 + i) * button_x, self.screen,
-                                          button_color, button_hover_color, self.font, text=strings[string_counter]))
-                string_counter += 1
+                button_line.append(Button((1 + j) * button_y, (1 + i) * button_x, self.screen, button_color,
+                                          button_hover_color, self.font, text=strings[counter], func=funcs[counter]))
+                counter += 1
             self.buttons.extend(button_line)
 
     def run(self):
@@ -61,7 +78,9 @@ class Display:
                     for button in self.buttons:
                         button.calc_color(event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    pass
+                    for button in self.buttons:
+                        if button.is_inside(event.pos):
+                            button.execute()
                     # Check if the button is clicked
 
             # Clear the screen
